@@ -7,19 +7,19 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button full large>   
+  <button ion-button full large (click)='novoRegistro()'>  
     <div style="padding-right:10px">
         <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
     </div>
-    Registrar Crise
+    Novo Registro
   </button>
-  <button ion-button full large  style="margin-top:10px;">
-    <div style="padding-right:10px">
-        <ion-icon name="warning"></ion-icon>
-    </div>
-    Registrar Ameaça
-  </button>
-  <button ion-button full large  style="margin-top:10px;">
+  <button ion-button full large  style="margin-top:10px;" (click)='listarRegistros()'>
+      <div style="padding-right:10px">
+          <ion-icon name="list"></ion-icon>
+      </div>   
+      Listar Registros
+    </button>
+  <button ion-button full large  style="margin-top:10px;" (click)='relatorio()'>
     <div style="padding-right:10px">
         <ion-icon name="list-box"></ion-icon>
     </div>   

@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Registros</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list>
+
+        <ion-item-sliding *ngfor="let reg of registros; let i = index">
+            <ion-item>
+  
+                <h2>{{registro.data}}</h2>
+                <p><b>{{registro.turno}} - {{registro.intensidade}}</b></p>
+                <p>registro.observacao</p>
+                
+            </ion-item>
+  
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)='editarRegistro({{registro.id}})'>
+                <ion-icon name="create"></ion-icon>
+                Editar
+              </button>
+            </ion-item-options>
+  
+            <ion-item-options side="left">
+              <button ion-button color="danger" (click)='excluirRegistro({{registro.id}})'>
+                <ion-icon name="trash"></ion-icon>
+                Apagar
+              </button>
+          </ion-item-options>
+  
+        </ion-item-sliding>
+
+
+      <!--
+        <ion-item-sliding>
+          <ion-item>
+
+              <h2>28/05/2019</h2>
+              <p><b>Noturno - Forte</b></p>
+              <p>Observação de no máximo 100 letras para testar como ficará este campo na listagem com preenchimento</p>
+              
+          </ion-item>
+
+          <ion-item-options side="right">
+            <button ion-button color="primary" (click)='editarRegistro()'>
+              <ion-icon name="create"></ion-icon>
+              Editar
+            </button>
+          </ion-item-options>
+
+          <ion-item-options side="left">
+            <button ion-button color="danger">
+              <ion-icon name="trash"></ion-icon>
+              Apagar
+            </button>
+        </ion-item-options>
+
+      </ion-item-sliding>
+      -->
+    </ion-list>
+</ion-content>
