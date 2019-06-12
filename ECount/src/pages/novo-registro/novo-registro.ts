@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the NovoRegistroPage page.
@@ -16,18 +17,21 @@ import { DatabaseProvider } from '../../providers/database/database';
 })
 export class NovoRegistroPage {
 
-  registro: any=[{
-    intensidade: "",
-    turno:"",
-    data:"",
-    observacao:""
-  }]
+  public formulario : FormGroup;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public toast: ToastController,
               public loading: LoadingController,
-              public database: DatabaseProvider) {
+              public database: DatabaseProvider,
+              private formBuilder: FormBuilder) {
+
+    this.formulario = this.formBuilder.group({
+      intensidade: ['', [Validators.required]],
+      turno: ['', [Validators.required]],
+      data: ['', [Validators.required]],
+      observacao: ['', [Validators.required,Validators.maxLength(100)]]
+    });
   }
 
   RegistraNovaCrise(){
@@ -38,27 +42,15 @@ export class NovoRegistroPage {
       position: 'botton'
     });
 
-    this.database.RegistraCrise(this.registro.intensidade, this.registro.turno, this.registro.data, this.registro.observacao);
+    this.database.RegistraCrise(this.formulario.value.intensidade, this.formulario.value.turno, this.formulario.value.data, this.formulario.value.observacao).then((data) => {
+      
+      console.log(data);
+      msg.present();
+      this.formulario.reset();
+      this.navCtrl.setRoot('HomePage');
 
-    msg.present();
-    
-    this.limpaCampos();
-
-    this.navCtrl.setRoot('HomePage');
-
+    },(error)=>{
+      console.log(error);
+    })
   }
-
-  limpaCampos(){
-
-    this.registro.intensidade = '';
-    this.registro.turno = '';
-    this.registro.data = '';
-    this.registro.observacao = '';
-
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NovoRegistroPage');
-  }
-
 }

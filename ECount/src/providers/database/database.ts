@@ -24,7 +24,7 @@ export class DatabaseProvider {
       this.storage.create({name: "data.db", location:"default"}).then((db:SQLiteObject) => {
 
         this.db = db;
-        db.executeSql("CREATE TABLE IF NOT EXISTS crises (id INTEGER PRIMARY KEY AUTOINCREMENT, intensidade INTEGER, turno INTEGER, data DATE, observacao NVARCHAR(100)",[]);
+        db.executeSql("CREATE TABLE IF NOT EXISTS crises (id INTEGER PRIMARY KEY AUTOINCREMENT, intensidade INTEGER, turno INTEGER, data DATE, observacao TEXT)",[]);
         this.isOpen = true;
 
       }).catch((error)=>{
@@ -34,6 +34,7 @@ export class DatabaseProvider {
   }
 
   RegistraCrise(intensidade: number, turno: number, data: string, observacao: string ){
+
     return new Promise((resolve, reject) => {
       let sql = "INSERT INTO crises (intensidade, turno, data, observacao) VALUES (?,?,?,?)";
       this.db.executeSql(sql, [intensidade, turno, data, observacao]).then((data)=>{
@@ -65,4 +66,42 @@ export class DatabaseProvider {
       })
     })
   }
+
+  GetCriseEdit(idCrise : number){
+    return new Promise((resolve, reject)=>{
+      this.db.executeSql('SELECT * FROM crises WHERE id = ?',[idCrise]).then((data)=>{
+
+        if (data.rows.length > 0) {        
+          var criseEdit = data.rows.item(0);        
+        }
+
+        resolve(criseEdit);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+
+  DeleteCrise(idCrise : number){
+    return new Promise((resolve, reject) => {
+      let sql = "DELETE FROM crises WHERE id = ?";
+      this.db.executeSql(sql, [idCrise]).then((data)=>{
+        resolve(data);
+      },(error)=>{
+        reject(error);
+      })
+    })
+  }
+
+  UpdateCrise(id:number, intensidade: number, turno: number, data: string, observacao: string ){
+    return new Promise((resolve, reject) => {
+      let sql = "UPDATE crises SET intensidade = ?, turno = ?, data = ?, observacao = ? WHERE id = ?";
+      this.db.executeSql(sql, [intensidade, turno, data, observacao, id]).then((data)=>{
+        resolve(data);
+      }, (error)=> {
+        reject(error);
+      });
+    });
+  }
+
 }

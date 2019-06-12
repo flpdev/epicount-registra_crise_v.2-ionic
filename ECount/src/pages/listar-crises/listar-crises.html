@@ -8,24 +8,47 @@
 
     <ion-list>
 
-        <ion-item-sliding *ngfor="let reg of registros; let i = index">
+        <ion-item-sliding *ngFor="let reg of registros; let i = index">
             <ion-item>
-  
-                <h2>{{registro.data}}</h2>
-                <p><b>{{registro.turno}} - {{registro.intensidade}}</b></p>
-                <p>registro.observacao</p>
+
+                <h2><b>{{reg.data | date:'dd/MM/yyyy'}}</b></h2>
+
+                <span *ngIf="reg.turno == 1">
+                  Matutino
+                </span>
+                <span *ngIf="reg.turno == 2">
+                  Vespertino
+                </span>
+                <span *ngIf="reg.turno == 3">
+                  Noturno
+                </span>
+
+                <span *ngIf="reg.intensidade == 1">
+                  - Ameaça
+                </span>
+                <span *ngIf="reg.intensidade == 2">
+                  - Fraca
+                </span>
+                <span *ngIf="reg.intensidade == 3">
+                  - Moderada
+                </span>
+                <span *ngIf="reg.intensidade == 4">
+                  - Forte
+                </span>
+
+                <p>{{reg.observacao}}</p>
                 
             </ion-item>
   
             <ion-item-options side="right">
-              <button ion-button color="primary" (click)='editarRegistro({{registro.id}})'>
+              <button ion-button color="primary" (click)='editarRegistro(reg.id)'>
                 <ion-icon name="create"></ion-icon>
                 Editar
               </button>
             </ion-item-options>
   
             <ion-item-options side="left">
-              <button ion-button color="danger" (click)='excluirRegistro({{registro.id}})'>
+              <button ion-button color="danger" (click)='excluirRegistro(reg.id)'>
                 <ion-icon name="trash"></ion-icon>
                 Apagar
               </button>
@@ -33,32 +56,5 @@
   
         </ion-item-sliding>
 
-
-      <!--
-        <ion-item-sliding>
-          <ion-item>
-
-              <h2>28/05/2019</h2>
-              <p><b>Noturno - Forte</b></p>
-              <p>Observação de no máximo 100 letras para testar como ficará este campo na listagem com preenchimento</p>
-              
-          </ion-item>
-
-          <ion-item-options side="right">
-            <button ion-button color="primary" (click)='editarRegistro()'>
-              <ion-icon name="create"></ion-icon>
-              Editar
-            </button>
-          </ion-item-options>
-
-          <ion-item-options side="left">
-            <button ion-button color="danger">
-              <ion-icon name="trash"></ion-icon>
-              Apagar
-            </button>
-        </ion-item-options>
-
-      </ion-item-sliding>
-      -->
     </ion-list>
 </ion-content>

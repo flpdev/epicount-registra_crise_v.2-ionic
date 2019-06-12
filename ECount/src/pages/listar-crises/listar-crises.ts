@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { EditarRegistroPage } from '../editar-registro/editar-registro';
 import { DatabaseProvider } from '../../providers/database/database';
 
+
 /**
  * Generated class for the ListarCrisesPage page.
  *
@@ -18,6 +19,7 @@ import { DatabaseProvider } from '../../providers/database/database';
 export class ListarCrisesPage {
 
   registros:any;
+  registroEdit:any;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -29,30 +31,39 @@ export class ListarCrisesPage {
   }
 
   listaRegistros(){
-    this.registros = this.database.GetAllCrises
+
+    this.database.GetAllCrises().then((data: any)=>{
+      console.log(data);
+      this.registros = data;
+    }, (error) => {
+      console.log(error);
+    })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListarCrisesPage');
   }
 
-  editarRegistro(idRegistro){
-    console.log('aqui' + idRegistro);
-    this.navCtrl.push('EditarRegistroPage');
+  editarRegistro(id){
+
+    this.navCtrl.push('EditarRegistroPage', {idRegistro:id});
+    
   }
 
-  excluirregistro(idRegistro){
+  excluirRegistro(idRegistro){
+
+    this.database.DeleteCrise(idRegistro);
 
     let msg = this.toast.create({
-      message: 'Registro inserido',
+      message: 'Registro Excluído',
       duration: 3000,
       position: 'botton'
     });
 
+    msg.present();
 
-    console.log('excluir' + idRegistro);
-
-    
+    this.listaRegistros();
+   
   }
 
 }

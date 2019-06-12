@@ -11,38 +11,53 @@
 </ion-header>
 
 <ion-content padding>
-    <!-- UTILIZAR VARIÁVEL PARA ALIMENTAR OPTIONS-->
+
+  <form [formGroup]="formulario" (ngSubmit)="RegistraNovaCrise()">
+
       <ion-item> 
-        <ion-label color="primary">Itensidade</ion-label>
-        <ion-select interface="action-sheet" [(ngModel)]="registro.intensidade">      
-          <ion-option value="1">Ameaça</ion-option>
-          <ion-option value="2">Fraca</ion-option>
-          <ion-option value="3">Moderada</ion-option>
-          <ion-option value="4">Forte</ion-option>
-        </ion-select>
-      </ion-item>
-      
-      <ion-item> 
-          <ion-label color="primary">Turno</ion-label>
-          <ion-select interface="action-sheet" [(ngModel)]="registro.turno">      
-            <ion-option value="1">Matutino</ion-option>
-            <ion-option value="2">Vespertino</ion-option>
-            <ion-option value="3">Noturno</ion-option>
+          <ion-label color="primary">Itensidade</ion-label>
+          <ion-select interface="action-sheet" formControlName="intensidade">      
+            <ion-option value="1">Ameaça</ion-option>
+            <ion-option value="2">Fraca</ion-option>
+            <ion-option value="3">Moderada</ion-option>
+            <ion-option value="4">Forte</ion-option>
           </ion-select>
-      </ion-item>
+        </ion-item>
+        <ion-item *ngIf="formulario.get('intensidade').errors && formulario.get('intensidade').dirty">
+          <p color="danger" ion-text *ngIf="formulario.get('intensidade').hasError('required')">Campo Requerido</p>
+        </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Data</ion-label>
-          <ion-datetime [(ngModel)]="registro.data" displayFormat="DD/MM/YYYY"></ion-datetime>
-      </ion-item>
+        <ion-item> 
+            <ion-label color="primary">Turno</ion-label>
+            <ion-select interface="action-sheet" formControlName="turno">      
+              <ion-option value="1">Matutino</ion-option>
+              <ion-option value="2">Vespertino</ion-option>
+              <ion-option value="3">Noturno</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="formulario.get('turno').errors && formulario.get('turno').dirty">
+          <p color="danger" ion-text *ngIf="formulario.get('turno').hasError('turno')">Campo Requerido</p>
+        </ion-item>
 
-      <ion-item>
-          <ion-label color="primary" floating>Observação</ion-label>
-          <ion-textarea [(ngModel)]="registro.observacao" maxlength="100" rows="4"></ion-textarea>
-      </ion-item>
-
-      <div class="pdt10">
-          <button ion-button block>Gravar</button>
-      </div>
-      
+        <ion-item>
+            <ion-label color="primary" floating>Data</ion-label>
+            <ion-datetime formControlName="data" displayFormat="DD/MM/YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item *ngIf="formulario.get('data').errors && formulario.get('data').dirty">
+          <p color="danger" ion-text *ngIf="formulario.get('turno').hasError('data')">Campo Requerido</p>
+        </ion-item>
+  
+        <ion-item>
+            <ion-label color="primary" floating>Observação</ion-label>
+            <ion-textarea formControlName="observacao" maxlength="100" rows="4"></ion-textarea>
+        </ion-item>
+        <ion-item *ngIf="formulario.get('observacao').errors && formulario.get('observacao').dirty">
+          <p color="danger" ion-text *ngIf="formulario.get('observacao').hasError('required')">Campo Requerido</p>
+          <p color="danger" ion-text *ngIf="formulario.get('observacao').hasError('maxlength')">Qtd. Máxima 100</p>
+        </ion-item>
+  
+        <div class="pdt10">
+            <button type="submit" ion-button block [disabled]="!formulario.valid">Gravar</button>
+        </div>
+  </form>
 </ion-content>
