@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { DatabaseProvider } from '../../providers/database/database';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the RelatorioPage page.
@@ -15,7 +17,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RelatorioPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public formRel : FormGroup;
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public toast: ToastController,
+    public loading: LoadingController,
+    public database: DatabaseProvider,
+    private formBuilder: FormBuilder) {
+
+      this.formRel = this.formBuilder.group({
+        tipo: ['', [Validators.required]],
+        dataIni: ['', [Validators.required]],
+        dataFim: ['', [Validators.required]]
+
+      });
+
+    }
+
+  GeraRelatorio() {
+    
   }
 
   ionViewDidLoad() {

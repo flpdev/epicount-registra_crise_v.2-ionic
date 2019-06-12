@@ -22,22 +22,28 @@
   -->
   <ion-title>Filtros</ion-title>
 
+  <form [formGroup]="formRel" (ngSubmit)="GeraRelatorio()">
+
       <ion-item>
           <ion-label color="primary" floating>Data Início</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY"></ion-datetime>
+          <ion-datetime formControlName="dataInicio" displayFormat="DD/MM/YYYY"></ion-datetime>
       </ion-item>
 
       <ion-item>
           <ion-label color="primary" floating>Data Fim</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY"></ion-datetime>
+          <ion-datetime formControlName="dataFim" displayFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+
+      <ion-item> 
+          <ion-label color="primary">Tipo</ion-label>
+          <ion-select interface="action-sheet" formControlName="tipo">      
+            <ion-option value="1">Totalizadores</ion-option>
+            <ion-option value="2">Detalhado</ion-option>
+          </ion-select>
       </ion-item>
 
       <div class="pdt10">
-          <button ion-button block>Totalizadores</button>
-      </div>  
+          <button type="submit" ion-button block [disabled]="!formulario.valid">Gravar</button>
+      </div>
 
-      <div class="">
-          <button ion-button block>Detalhado</button>
-      </div>  
-  
 </ion-content>
