@@ -28,10 +28,16 @@
           <ion-label color="primary" floating>Data Início</ion-label>
           <ion-datetime formControlName="dataInicio" displayFormat="DD/MM/YYYY"></ion-datetime>
       </ion-item>
+      <ion-item *ngIf="formRel.get('dataInicio').errors && formRel.get('dataInicio').dirty">
+        <p color="danger" ion-text *ngIf="formRel.get('dataInicio').hasError('required')">Campo Obrigatório</p>
+      </ion-item>
 
       <ion-item>
           <ion-label color="primary" floating>Data Fim</ion-label>
           <ion-datetime formControlName="dataFim" displayFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="formRel.get('dataFim').errors && formRel.get('dataFim').dirty">
+        <p color="danger" ion-text *ngIf="formRel.get('dataFim').hasError('required')">Campo Obrigatório</p>
       </ion-item>
 
       <ion-item> 
@@ -41,9 +47,13 @@
             <ion-option value="2">Detalhado</ion-option>
           </ion-select>
       </ion-item>
+      <ion-item *ngIf="formRel.get('tipo').errors && formRel.get('tipo').dirty">
+        <p color="danger" ion-text *ngIf="formRel.get('tipo').hasError('required')">Campo Obrigatório</p>
+      </ion-item>
 
       <div class="pdt10">
-          <button type="submit" ion-button block [disabled]="!formulario.valid">Gravar</button>
+          <button type="submit" ion-button block [disabled]="!formRel.valid">Gerar</button>
       </div>
+  </form>
 
 </ion-content>

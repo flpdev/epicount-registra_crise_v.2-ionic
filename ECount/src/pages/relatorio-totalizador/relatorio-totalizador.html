@@ -1,0 +1,80 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Relatório Totalizadores</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <div>
+    <ion-item>
+        <b>Total Crises</b>
+        <ion-badge item-end>{{badgeTotal}}</ion-badge>
+    </ion-item>
+
+    <ion-card>
+      <ion-card-header>
+        Total por Intensidade
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        Percentual por Intensidade
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          Ameaça
+          <ion-badge item-end>{{badgePerc.ameaca}}%</ion-badge>
+        </ion-item>
+        <ion-item>
+          Fraca
+          <ion-badge item-end>{{badgePerc.fraca}}%</ion-badge>
+        </ion-item>
+        <ion-item>
+          Moderada
+          <ion-badge item-end>{{badgePerc.moderada}}%</ion-badge>
+        </ion-item>
+        <ion-item>
+          Forte
+          <ion-badge item-end>{{badgePerc.forte}}%</ion-badge>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        Total por Turno
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        Percentual por Turno
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          Matutino
+          <ion-badge item-end>{{badgePercTurno.matutino}}%</ion-badge>
+        </ion-item>
+        <ion-item>
+          Vespertino
+          <ion-badge item-end>{{badgePercTurno.vespertino}}%</ion-badge>
+        </ion-item>
+        <ion-item>
+          Noturno
+          <ion-badge item-end>{{badgePercTurno.noturno}}%</ion-badge>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

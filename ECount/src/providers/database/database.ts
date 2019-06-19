@@ -18,19 +18,25 @@ export class DatabaseProvider {
 
   constructor(public http: Http,
               public storage: SQLite) {
-    // VALIDA SE O BANCO DE DADOS JA FOI CRIADO
-    if(!this.isOpen){
-      this.storage = new SQLite();
-      this.storage.create({name: "data.db", location:"default"}).then((db:SQLiteObject) => {
 
-        this.db = db;
-        db.executeSql("CREATE TABLE IF NOT EXISTS crises (id INTEGER PRIMARY KEY AUTOINCREMENT, intensidade INTEGER, turno INTEGER, data DATE, observacao TEXT)",[]);
-        this.isOpen = true;
+    this.CreateDatabase();
 
-      }).catch((error)=>{
-        console.log(error);
-      })
-    }
+  }
+
+  CreateDatabase(){
+        // VALIDA SE O BANCO DE DADOS JA FOI CRIADO
+        if(!this.isOpen){
+          this.storage = new SQLite();
+          this.storage.create({name: "data.db", location:"default"}).then((db:SQLiteObject) => {
+    
+            this.db = db;
+            db.executeSql("CREATE TABLE IF NOT EXISTS crises (id INTEGER PRIMARY KEY AUTOINCREMENT, intensidade INTEGER, turno INTEGER, data DATE, observacao TEXT)",[]);
+            this.isOpen = true;
+    
+          }).catch((error)=>{
+            console.log(error);
+          })
+        }
   }
 
   RegistraCrise(intensidade: number, turno: number, data: string, observacao: string ){
@@ -102,6 +108,51 @@ export class DatabaseProvider {
         reject(error);
       });
     });
+  }
+
+  RelatorioTotalizador(dataIni: string, dataFim:string){
+
+    return new Promise((resolve, reject) => {
+
+      let sql = "SELECT (SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND intensidade = 1) AS qtdAmeaca," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND intensidade = 2) AS qtdFraca," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND intensidade = 3) AS qtdModerada," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND intensidade = 4) AS qtdForte," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND turno = 1) AS qtdMat," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND turno = 2) AS qtdVes," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"' AND turno = 3) AS qtdNot," +
+                "(SELECT COUNT(1) FROM crises WHERE data BETWEEN '"+ dataIni +"' and '"+ dataFim +"') AS qtdTotal";
+                
+      this.db.executeSql(sql, []).then((data)=>{ //OS COLCHETES DE VARIÁVEIS DEVEM SEMPRE SER INSERIDOS, CASO CONTRARIO HAVERÁ ERRO
+
+        let arrayRegistros = [];
+        if (data.rows.length > 0) {
+
+          for (let i = 0; i < data.rows.length; i++) {
+
+            arrayRegistros.push({
+              qtdAmeaca : data.rows.item(i).qtdAmeaca,
+              qtdFraca : data.rows.item(i).qtdFraca,
+              qtdModerada : data.rows.item(i).qtdModerada,
+              qtdForte : data.rows.item(i).qtdForte,
+              qtdMat : data.rows.item(i).qtdMat,
+              qtdVes : data.rows.item(i).qtdVes,
+              qtdNot : data.rows.item(i).qtdNot,
+              qtdTotal : data.rows.item(i).qtdTotal
+            });
+
+          }
+        }
+
+        resolve(arrayRegistros);
+        
+      }, (error)=>{
+
+        reject(error);
+
+      });
+    });
+
   }
 
 }

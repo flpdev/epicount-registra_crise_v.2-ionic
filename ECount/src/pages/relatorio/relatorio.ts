@@ -28,7 +28,7 @@ export class RelatorioPage {
 
       this.formRel = this.formBuilder.group({
         tipo: ['', [Validators.required]],
-        dataIni: ['', [Validators.required]],
+        dataInicio: ['', [Validators.required]],
         dataFim: ['', [Validators.required]]
 
       });
@@ -36,6 +36,18 @@ export class RelatorioPage {
     }
 
   GeraRelatorio() {
+
+     // Totalizadores
+    if (this.formRel.value.tipo == 1) {
+
+      this.navCtrl.push('RelatorioTotalizadorPage', {dataInicio:this.formRel.value.dataInicio, dataFim: this.formRel.value.dataFim});
+
+    // Detalhado  
+    } else { 
+
+      this.navCtrl.push('RelatorioDetalhadoPage', {dataInicio:this.formRel.value.dataIni, dataFim: this.formRel.value.dataFim});
+      
+    }
     
   }
 

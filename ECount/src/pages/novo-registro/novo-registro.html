@@ -24,7 +24,7 @@
           </ion-select>
         </ion-item>
         <ion-item *ngIf="formulario.get('intensidade').errors && formulario.get('intensidade').dirty">
-          <p color="danger" ion-text *ngIf="formulario.get('intensidade').hasError('required')">Campo Requerido</p>
+          <p color="danger" ion-text *ngIf="formulario.get('intensidade').hasError('required')">Campo Obrigatório</p>
         </ion-item>
 
         <ion-item> 
@@ -36,7 +36,7 @@
             </ion-select>
         </ion-item>
         <ion-item *ngIf="formulario.get('turno').errors && formulario.get('turno').dirty">
-          <p color="danger" ion-text *ngIf="formulario.get('turno').hasError('turno')">Campo Requerido</p>
+          <p color="danger" ion-text *ngIf="formulario.get('turno').hasError('turno')">Campo Obrigatório</p>
         </ion-item>
 
         <ion-item>
@@ -44,7 +44,7 @@
             <ion-datetime formControlName="data" displayFormat="DD/MM/YYYY"></ion-datetime>
         </ion-item>
         <ion-item *ngIf="formulario.get('data').errors && formulario.get('data').dirty">
-          <p color="danger" ion-text *ngIf="formulario.get('turno').hasError('data')">Campo Requerido</p>
+          <p color="danger" ion-text *ngIf="formulario.get('turno').hasError('data')">Campo Obrigatório</p>
         </ion-item>
   
         <ion-item>
@@ -52,7 +52,7 @@
             <ion-textarea formControlName="observacao" maxlength="100" rows="4"></ion-textarea>
         </ion-item>
         <ion-item *ngIf="formulario.get('observacao').errors && formulario.get('observacao').dirty">
-          <p color="danger" ion-text *ngIf="formulario.get('observacao').hasError('required')">Campo Requerido</p>
+          <p color="danger" ion-text *ngIf="formulario.get('observacao').hasError('required')">Campo Obrigatório</p>
           <p color="danger" ion-text *ngIf="formulario.get('observacao').hasError('maxlength')">Qtd. Máxima 100</p>
         </ion-item>
   
