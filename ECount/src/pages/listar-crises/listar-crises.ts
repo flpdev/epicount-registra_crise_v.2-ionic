@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { EditarRegistroPage } from '../editar-registro/editar-registro';
+
 import { DatabaseProvider } from '../../providers/database/database';
 
 

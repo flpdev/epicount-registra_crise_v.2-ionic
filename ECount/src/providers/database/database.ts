@@ -152,7 +152,28 @@ export class DatabaseProvider {
 
       });
     });
+  }
 
+  RelatorioDetalhadoLista(dataIni: string, dataFim:string){
+    return new Promise((resolve, reject)=>{
+      this.db.executeSql("SELECT * FROM crises WHERE data BETWEEN '"+dataIni+"' AND '"+dataFim+"' ORDER BY 1 desc",[]).then((data)=>{
+        let arrayCrises = [];
+        if(data.rows.length > 0){
+          for (let i = 0; i < data.rows.length; i++) {
+            arrayCrises.push({
+              id: data.rows.item(i).id,
+              intensidade: data.rows.item(i).intensidade,
+              turno: data.rows.item(i).turno,
+              data: data.rows.item(i).data,
+              observacao: data.rows.item(i).observacao
+            });          
+          }
+        }
+        resolve(arrayCrises);
+      }, (error)=> {
+        reject(error);
+      })
+    })
   }
 
 }

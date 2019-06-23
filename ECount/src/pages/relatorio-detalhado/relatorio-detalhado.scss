@@ -1,3 +1,20 @@
-page-relatorio-detalhado {
+    p {
+        white-space:pre-line;
+    }      
 
-}
+    .pdt10 {
+        padding-top: 10px;
+    }
+
+    .pdt20 {
+        padding-top: 20px;
+    }
+
+    @media print {
+        #printPageButton {
+          display: none;
+        }
+        #printNav{
+          display: none;
+        }
+      }

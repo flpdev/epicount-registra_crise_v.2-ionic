@@ -45,7 +45,7 @@ export class RelatorioPage {
     // Detalhado  
     } else { 
 
-      this.navCtrl.push('RelatorioDetalhadoPage', {dataInicio:this.formRel.value.dataIni, dataFim: this.formRel.value.dataFim});
+      this.navCtrl.push('RelatorioDetalhadoPage', {dataInicio:this.formRel.value.dataInicio, dataFim: this.formRel.value.dataFim});
       
     }
     

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { NovoRegistroPage } from '../novo-registro/novo-registro';
-import { RelatorioPage } from '../relatorio/relatorio';
 
 /**
  * Generated class for the HomePage page.

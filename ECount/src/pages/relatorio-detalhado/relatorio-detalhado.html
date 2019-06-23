@@ -1,15 +1,85 @@
-<!--
-  Generated template for the RelatorioDetalhadoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-  <ion-navbar>
-    <ion-title>RelatorioDetalhado</ion-title>
+<ion-header id="printNav">
+  <ion-navbar >
+    <ion-title>Relatório Detalhado</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+  <button id="printPageButton" ion-button block (click)="imprimir(conteudo)">Salvar PDF</button>
+
+  <div id="conteudo" class="pdt20">
+
+    <h4>Registros de {{dataIni  | date:'dd/MM/yyyy'}} a {{dataFim  | date:'dd/MM/yyyy'}}</h4>
+
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <b class="pdt10">Quantidade de crises:</b>
+              <p>Ameaça: {{qtdCrises.ameaca}}</p>
+              <p>Fraca: {{qtdCrises.fraca}}</p>
+              <p>Moderada: {{qtdCrises.moderada}}</p>
+              <p>Forte: {{qtdCrises.forte}}</p>
+              <p>Total: {{qtdCrises.total}}</p>
+            </ion-col>
+
+            <ion-col>
+              <b class="pdt10">Percentual x intensidade:</b>
+              <p>Ameaça: {{percIntensidade.ameaca}}%</p>
+              <p>Fraca: {{percIntensidade.fraca}}%</p>
+              <p>Moderada: {{percIntensidade.moderada}}%</p>
+              <p>Forte: {{percIntensidade.forte}}%</p>
+            </ion-col>
+
+            <ion-col>
+              <b class="pdt10">Percentual x turno:</b>
+              <p>Matutino: {{percTurno.matutino}}%</p>
+              <p>Vespertino: {{percTurno.vespertino}}%</p>
+              <p>Noturno: {{percTurno.noturno}}%</p>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
+    </ion-list>
+
+
+    <h5>Histórico de crises</h5>
+
+    <ion-list>
+        <ion-item *ngFor="let reg of registrosLista; let i = index">
+
+                <h2><b>{{reg.data | date:'dd/MM/yyyy'}}</b></h2>
+
+                <span *ngIf="reg.turno == 1">
+                  Matutino
+                </span>
+                <span *ngIf="reg.turno == 2">
+                  Vespertino
+                </span>
+                <span *ngIf="reg.turno == 3">
+                  Noturno
+                </span>
+
+                <span *ngIf="reg.intensidade == 1">
+                  - Ameaça
+                </span>
+                <span *ngIf="reg.intensidade == 2">
+                  - Fraca
+                </span>
+                <span *ngIf="reg.intensidade == 3">
+                  - Moderada
+                </span>
+                <span *ngIf="reg.intensidade == 4">
+                  - Forte
+                </span>
+
+                <p>{{reg.observacao}}</p>
+                
+        </ion-item>
+    </ion-list>
+
+  </div>
 
 </ion-content>

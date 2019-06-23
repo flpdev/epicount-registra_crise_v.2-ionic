@@ -9,6 +9,7 @@ import { DatabaseProvider } from '../providers/database/database';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { HttpModule } from '@angular/http';
+import { Printer } from '@ionic-native/printer';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HttpModule } from '@angular/http';
     SplashScreen,
     SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseProvider
+    DatabaseProvider,
+    Printer
   ]
 })
 export class AppModule {}
