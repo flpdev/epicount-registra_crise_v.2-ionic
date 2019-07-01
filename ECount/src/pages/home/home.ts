@@ -34,4 +34,8 @@ export class HomePage {
     this.navCtrl.push('ListarCrisesPage');
   }
 
+  backup(){
+    this.navCtrl.push('BackupPage');
+  }
+
 }
