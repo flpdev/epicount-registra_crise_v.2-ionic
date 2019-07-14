@@ -9,7 +9,7 @@
     .pdt20 {
         padding-top: 20px;
     }
-
+/*
     @media print {
         #printPageButton {
           display: none;
@@ -25,3 +25,61 @@
           overflow: visible !important;
         }
       }
+*/
+
+// @media print styles are included to improve layout and content when printing in the web application.
+@media print {
+  #printPageButton {
+    display: none;
+  }
+  // Within this print style, contain overrides are needed for reliable rendering in browsers that support it (Chrome).
+  //  contain is set by Ionic for several components. Ionic sets contain based on assumptions about content (e.g. the
+  //  size of child content cannot affect the height of the parent container. These assumptions no longer hold true
+  //  for the CSS used during printing. If we do not set contain to none, the browser does not think the content
+  //  can change, so it does not even consider rendering the new styles and layouts.
+
+  // Certain content (e.g. headers and footers) are not useful in printed material. These objects also negatively affect
+  //  the layout of certain content. In many cases they appear on top of the "main" content.
+  ion-header, ion-backdrop, .tabbar, ion-footer {
+    display: none !important;
+  }
+
+  // ion-nav needs to be treated special compared to the containers below. It is possible for an ion-nav to be present
+  //  at a similar level to the container of the modal (ion-modal). If the position of ion-nav is set to relative it
+  //  will always be displayed before the modal content. This causes the modal content to come after the ion-nav
+  //  content, which is undesirable in all situations I've tested.
+  ion-nav {
+    contain: none;
+    overflow: visible;
+  }
+
+  // When printing, we want to treat an active modal or page as  "full" content. We allow overflow and let the content
+  //  determine the height of the container. We need to ensure the content as well as the content containers are
+  //  updated. If a modal is active, the modal will be displayed in the printed content. Worth noting: using .app-root
+  //  appears to cover ion-app, so ion-app is not included directly. Also, the items have been sorted based on scope.
+  .scroll-content,
+  ion-modal.show-page,
+  ion-modal.show-page .modal-wrapper,
+  ion-modal.show-page .ion-page.show-page,
+  ion-modal.show-page .ion-page.show-page > ion-content,
+  .ion-page.show-page,
+  .ion-page.show-page > ion-content,
+  ion-tab,
+  ion-tabs,
+  .app-root,
+  body
+  {
+    contain: none;
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  // When we are printing, we want to remove the default margin-top. The margin-top is needed so that scrollable content
+  //  is not hidden under the nav bar at the top of the page. When printing, the nav bar is not included, so the margin
+  //  is not needed.
+  .fixed-content, .scroll-content {
+    margin-top: 0 !important;
+  }
+}
+
