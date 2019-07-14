@@ -21,26 +21,26 @@ export class RelatorioTotalizadorPage {
   @ViewChild('barCanvas') barCanvas;
   @ViewChild('doughnutCanvas') doughnutCanvas;
 
-  dataRel:any;
+  dataRel: any;
   barChart: any;
   doughnutChart: any;
   badgeTotal: number;
   badgePerc: any = {
-    ameaca :  "",
-    fraca : "",
-    moderada : "",
-    forte : ""
+    ameaca: "",
+    fraca: "",
+    moderada: "",
+    forte: ""
   }
 
-  badgePercTurno:any = {
-    matutino : "",
-    vespertino : "",
+  badgePercTurno: any = {
+    matutino: "",
+    vespertino: "",
     noturno: ""
   }
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              private database: DatabaseProvider) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private database: DatabaseProvider) {
 
     this.geraRelatorio();
   }
@@ -49,12 +49,12 @@ export class RelatorioTotalizadorPage {
     console.log('ionViewDidLoad RelatorioTotalizadorPage');
   }
 
-  geraRelatorio(){
+  geraRelatorio() {
 
     var dataIni = this.navParams.get('dataInicio');
     var dataFim = this.navParams.get('dataFim');
 
-    this.database.RelatorioTotalizador(dataIni, dataFim).then((data:any)=>{
+    this.database.RelatorioTotalizador(dataIni, dataFim).then((data: any) => {
 
       this.dataRel = data;
       this.badgeTotal = this.dataRel[0].qtdTotal;
@@ -62,17 +62,17 @@ export class RelatorioTotalizadorPage {
       this.doughnutChartMethod(this.dataRel[0].qtdMat, this.dataRel[0].qtdVes, this.dataRel[0].qtdNot);
 
       // Alimenta percentuais para badge intensidade
-      this.badgePerc.ameaca = ((this.dataRel[0].qtdAmeaca / this.dataRel[0].qtdTotal)*100).toFixed(2);
-      this.badgePerc.fraca = ((this.dataRel[0].qtdFraca / this.dataRel[0].qtdTotal)*100).toFixed(2);
-      this.badgePerc.moderada = ((this.dataRel[0].qtdModerada / this.dataRel[0].qtdTotal)*100).toFixed(2);
-      this.badgePerc.forte = ((this.dataRel[0].qtdForte / this.dataRel[0].qtdTotal)*100).toFixed(2);
+      this.badgePerc.ameaca = ((this.dataRel[0].qtdAmeaca / this.dataRel[0].qtdTotal) * 100).toFixed(2);
+      this.badgePerc.fraca = ((this.dataRel[0].qtdFraca / this.dataRel[0].qtdTotal) * 100).toFixed(2);
+      this.badgePerc.moderada = ((this.dataRel[0].qtdModerada / this.dataRel[0].qtdTotal) * 100).toFixed(2);
+      this.badgePerc.forte = ((this.dataRel[0].qtdForte / this.dataRel[0].qtdTotal) * 100).toFixed(2);
 
       //Alimenta percentuais para badge turno
-      this.badgePercTurno.matutino = ((this.dataRel[0].qtdMat / this.dataRel[0].qtdTotal)*100).toFixed(2);
-      this.badgePercTurno.vespertino = ((this.dataRel[0].qtdVes / this.dataRel[0].qtdTotal)*100).toFixed(2);
-      this.badgePercTurno.noturno = ((this.dataRel[0].qtdNot / this.dataRel[0].qtdTotal)*100).toFixed(2);
+      this.badgePercTurno.matutino = ((this.dataRel[0].qtdMat / this.dataRel[0].qtdTotal) * 100).toFixed(2);
+      this.badgePercTurno.vespertino = ((this.dataRel[0].qtdVes / this.dataRel[0].qtdTotal) * 100).toFixed(2);
+      this.badgePercTurno.noturno = ((this.dataRel[0].qtdNot / this.dataRel[0].qtdTotal) * 100).toFixed(2);
 
-    }, (error)=>{
+    }, (error) => {
 
       console.log(error);
 
@@ -80,7 +80,7 @@ export class RelatorioTotalizadorPage {
   } // fim geraRelatorio()
 
 
-  barChartMethod(qtdTotal :number, qtdAmeaca :number, qtdFraca :number, qtdModerada :number, qtdForte :number) {
+  barChartMethod(qtdTotal: number, qtdAmeaca: number, qtdFraca: number, qtdModerada: number, qtdForte: number) {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
@@ -102,7 +102,7 @@ export class RelatorioTotalizadorPage {
             'rgba(196, 184, 56, 1)',
             'rgba(217, 125, 44, 1)',
             'rgba(176, 44, 44, 1)'
-          
+
           ],
           borderWidth: 1
         }]

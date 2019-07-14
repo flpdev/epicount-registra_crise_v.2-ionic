@@ -45,9 +45,7 @@ export class BackupPage {
       this.filepath.resolveNativePath(uri).then(file => {
 
         this.data = normalizeURL(file);
-        console.log('data', file);
-        //this.fileopener.open(this.data, 'application/json').then(value=>{
-        //}).catch(error => console.log(error));
+
         this.file.resolveLocalFilesystemUrl(file).then(fileEntry => {
           let url = fileEntry.nativeURL;
 
@@ -68,6 +66,14 @@ export class BackupPage {
 
               this.database.Importar(sql);
 
+              let msg = this.toast.create({
+                message: 'O arquivo foi importado com sucesso.',
+                duration: 3000,
+                position: 'botton'
+              });
+
+              msg.present();
+
               resolve(returnJson);
             }, (error) => {
               reject(error);
@@ -85,11 +91,14 @@ export class BackupPage {
 
     let data: any;
     data = this.database.Exportar();
-    console.log(data);
+
+    var currentTime = new Date().toISOString().slice(0, 10);
+
+    console.log(currentTime);
 
     console.log(this.file.externalRootDirectory);
     let path = this.file.externalRootDirectory + '/Download/';
-    this.file.writeFile(path, 'backupEcount.sql', data, { replace: true }).then(() => {
+    this.file.writeFile(path, 'EpicontBackup[' + currentTime + '].sql', data, { replace: true }).then(() => {
 
       let msg = this.toast.create({
         message: 'O arquivo foi baixado. Verifique sua pasta download.',

@@ -16,7 +16,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter';
 export class DatabaseProvider {
 
   private db: SQLiteObject;
-  private isOpen: boolean;
+  public isOpen: boolean;
 
   constructor(public http: Http,
     public storage: SQLite,

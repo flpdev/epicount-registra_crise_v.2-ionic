@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, LoadingController, Platform, ToastController } from 'ionic-angular';
+import { DatabaseProvider } from '../../providers/database/database';
 
 @IonicPage()
 @Component({
@@ -15,26 +9,73 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  contaDBOpen: any = 0;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private database: DatabaseProvider,
+    public loadingCtrl: LoadingController,
+    public platform: Platform,
+    public toastCtrl: ToastController) {
+
+    if (this.database.isOpen != true) {
+      this.openDatabase();
+    }
+
+  }
+
+  openDatabase() {
+
+    this.presentLoading();
+    if (this.contaDBOpen <= 3) {
+
+      try {
+        this.database.CreateDatabase();
+      } catch (error) {
+        this.contaDBOpen++;
+        this.openDatabase();
+      }
+
+    } else {
+
+      const toast = this.toastCtrl.create({
+        message: 'Falha ao iniciar banco de dados, por favor abra o App novamente.',
+        duration: 3000
+      });
+
+      toast.present();
+
+      this.platform.exitApp();
+
+    }
+  }
+
+
+  presentLoading() {
+    const loader = this.loadingCtrl.create({
+      content: "Iniciando banco de dados.",
+      duration: 3000
+    });
+    loader.present();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
 
-  novoRegistro(){
+  novoRegistro() {
     this.navCtrl.push('NovoRegistroPage');
   }
 
-  relatorio(){
+  relatorio() {
     this.navCtrl.push('RelatorioPage');
   }
 
-  listarRegistros(){
+  listarRegistros() {
     this.navCtrl.push('ListarCrisesPage');
   }
 
-  backup(){
+  backup() {
     this.navCtrl.push('BackupPage');
   }
 

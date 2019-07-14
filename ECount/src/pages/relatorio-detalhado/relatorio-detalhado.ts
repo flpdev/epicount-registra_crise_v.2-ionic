@@ -49,12 +49,12 @@ export class RelatorioDetalhadoPage {
   }
 
   imprimir(content){
+
+console.log('conteúdo',content);
+
     let options: PrintOptions = {
-      name: 'Registros Ecount',
+      name: 'Registros Epicount',
       printerId: 'printer007',
-      duplex: true,
-      landscape: true,
-      grayscale: true
     };
  
     this.printer.print(content, options);

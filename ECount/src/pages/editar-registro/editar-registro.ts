@@ -14,43 +14,43 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
   selector: 'page-editar-registro',
   templateUrl: 'editar-registro.html',
 })
-export class EditarRegistroPage {  
+export class EditarRegistroPage {
 
-  public formulario : FormGroup;
+  public formulario: FormGroup;
 
-  registroEdit:any=[{
-    id:"",
-    intensidade:"",
-    turno:"",
-    data:"",
-    observacao:""
+  registroEdit: any = [{
+    id: "",
+    intensidade: "",
+    turno: "",
+    data: "",
+    observacao: ""
   }]
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams, 
-              private database : DatabaseProvider,
-              private formBuilder: FormBuilder,
-              public toast: ToastController,
-              public loading: LoadingController) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private database: DatabaseProvider,
+    private formBuilder: FormBuilder,
+    public toast: ToastController,
+    public loading: LoadingController) {
 
 
     this.carregaInfo();
 
   }
 
-  carregaInfo(){
+  carregaInfo() {
 
     //CARREGA FORMULARIO (É NECESSÁRIO ESTAR FORA POIS CASO CONTRÁRIO DARÁ ERRO DEVIDO A VALIDAÇÕES)
     this.formulario = this.formBuilder.group({
-      id : [''],
+      id: [''],
       intensidade: ['', [Validators.required]],
       turno: ['', [Validators.required]],
       data: ['', [Validators.required]],
-      observacao: ['', [Validators.required,Validators.maxLength(100)]]
+      observacao: ['', [Validators.required, Validators.maxLength(100)]]
     });
 
     var idRegistro = this.navParams.get('idRegistro')
-    this.database.GetCriseEdit(idRegistro).then((data:any)=>{
+    this.database.GetCriseEdit(idRegistro).then((data: any) => {
       this.registroEdit = data;
 
       //ALIMENTA CAMPOS COM DADOS RETORNADOS DO SELECT BY ID
@@ -62,12 +62,12 @@ export class EditarRegistroPage {
         observacao: this.registroEdit.observacao
       });
 
-    }, (error)=>{
+    }, (error) => {
       console.log(error);
     })
   }
 
-  gravaEdicaoRegistro(){
+  gravaEdicaoRegistro() {
 
     let msg = this.toast.create({
       message: 'Registro alterado',
@@ -76,13 +76,13 @@ export class EditarRegistroPage {
     });
 
     this.database.UpdateCrise(this.formulario.value.id, this.formulario.value.intensidade, this.formulario.value.turno, this.formulario.value.data, this.formulario.value.observacao).then((data) => {
-      
+
       console.log(data);
       msg.present();
       this.formulario.reset();
       this.navCtrl.setRoot('HomePage');
 
-    },(error)=>{
+    }, (error) => {
       console.log(error);
     })
 
