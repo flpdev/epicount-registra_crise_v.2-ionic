@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Platform, ToastController, AlertController } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 
 @IonicPage()
@@ -9,14 +9,15 @@ import { DatabaseProvider } from '../../providers/database/database';
 })
 export class HomePage {
 
-  contaDBOpen: any = 0;
+  contaDBOpen: any = 1;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private database: DatabaseProvider,
     public loadingCtrl: LoadingController,
     public platform: Platform,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    public alertCtrl: AlertController) {
 
     if (this.database.isOpen != true) {
       this.openDatabase();
@@ -38,22 +39,27 @@ export class HomePage {
 
     } else {
 
-      const toast = this.toastCtrl.create({
+      const confirm = this.alertCtrl.create({
+        title: 'Banco de dados falhou',
         message: 'Falha ao iniciar banco de dados, por favor abra o App novamente.',
-        duration: 3000
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+              confirm.present();
+              console.log('Agree clicked');
+              this.platform.exitApp();
+            }
+          }
+        ]
       });
-
-      toast.present();
-
-      this.platform.exitApp();
-
     }
   }
 
 
   presentLoading() {
     const loader = this.loadingCtrl.create({
-      content: "Iniciando banco de dados.",
+      content: "Iniciando banco de dados, tentativa " + this.contaDBOpen,
       duration: 3000
     });
     loader.present();

@@ -1,5 +1,5 @@
 <ion-header id="printNav">
-  <ion-navbar >
+  <ion-navbar>
     <ion-title>Relatório Detalhado</ion-title>
   </ion-navbar>
 </ion-header>
@@ -8,7 +8,11 @@
 
   <button id="printPageButton" ion-button block (click)="imprimir(conteudo)">Salvar PDF</button>
 
-  <div id="conteudo" class="pdt20 conteudo">
+  <div id="conteudo" class="conteudo">
+
+    <div id="img">
+      <img src="../../assets/imgs/epicount.png">
+    </div>
 
     <h4>Registros de {{dataIni  | date:'dd/MM/yyyy'}} a {{dataFim  | date:'dd/MM/yyyy'}}</h4>
 
@@ -40,46 +44,46 @@
               <p>Noturno: {{percTurno.noturno}}%</p>
             </ion-col>
           </ion-row>
-      </ion-grid>
-    </ion-item>
+        </ion-grid>
+      </ion-item>
     </ion-list>
 
 
     <h5>Histórico de crises</h5>
 
     <ion-list>
-        <ion-item *ngFor="let reg of registrosLista; let i = index">
+      <ion-item *ngFor="let reg of registrosLista; let i = index">
 
-                <h2><b>{{reg.data | date:'dd/MM/yyyy'}}</b></h2>
+        <h2><b>{{reg.data | date:'dd/MM/yyyy'}}</b></h2>
 
-                <span *ngIf="reg.turno == 1">
-                  Matutino
-                </span>
-                <span *ngIf="reg.turno == 2">
-                  Vespertino
-                </span>
-                <span *ngIf="reg.turno == 3">
-                  Noturno
-                </span>
+        <span *ngIf="reg.turno == 1">
+          Matutino
+        </span>
+        <span *ngIf="reg.turno == 2">
+          Vespertino
+        </span>
+        <span *ngIf="reg.turno == 3">
+          Noturno
+        </span>
 
-                <span *ngIf="reg.intensidade == 1">
-                  - Ameaça
-                </span>
-                <span *ngIf="reg.intensidade == 2">
-                  - Fraca
-                </span>
-                <span *ngIf="reg.intensidade == 3">
-                  - Moderada
-                </span>
-                <span *ngIf="reg.intensidade == 4">
-                  - Forte
-                </span>
+        <span *ngIf="reg.intensidade == 1">
+          - Ameaça
+        </span>
+        <span *ngIf="reg.intensidade == 2">
+          - Fraca
+        </span>
+        <span *ngIf="reg.intensidade == 3">
+          - Moderada
+        </span>
+        <span *ngIf="reg.intensidade == 4">
+          - Forte
+        </span>
 
-                <p>{{reg.observacao}}</p>
-                
-        </ion-item>
+        <p>{{reg.observacao}}</p>
+
+      </ion-item>
     </ion-list>
-<!--teste-->
+    <!--teste-->
   </div>
 
 </ion-content>

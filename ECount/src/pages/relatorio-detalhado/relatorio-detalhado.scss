@@ -9,23 +9,11 @@
     .pdt20 {
         padding-top: 20px;
     }
-/*
-    @media print {
-        #printPageButton {
-          display: none;
-        }
-        #printNav{
-          display: none;
-        }
 
-        //abaixo
-
-        .scroll-content{
-          position: relative;
-          overflow: visible !important;
-        }
-      }
-*/
+    #img{
+      max-width: 30%;
+      visibility: hidden;
+    }
 
 // @media print styles are included to improve layout and content when printing in the web application.
 @media print {
@@ -80,6 +68,11 @@
   //  is not needed.
   .fixed-content, .scroll-content {
     margin-top: 0 !important;
+  }
+
+  #img{
+    max-width: 30%;
+    visibility: visible;
   }
 }
 
